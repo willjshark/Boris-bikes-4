@@ -31,7 +31,7 @@ end
   
 
   it 'Should throw error if at max capacity' do
-  20.times {
+  DockingStation::DEFAULT_CAPACITY.times {
   subject.dock_bike(Bike.new)
   }
   expect{subject.dock_bike(Bike.new)}.to raise_error 'The docking station can only hold 20 bikes'
@@ -46,6 +46,14 @@ end
     expect(subject.release_bike).to eq array.pop
   end
   end
+
+  it 'Accepts custom capacity on creation or defaults to 20' do
+    docking_station = DockingStation.new
+    expect(docking_station.capacity).to eq 20
+    docking_station2 = DockingStation.new(30)
+    expect(docking_station2.capacity).to eq 30
+  end
+
 
 
 end
