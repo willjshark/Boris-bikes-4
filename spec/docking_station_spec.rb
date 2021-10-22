@@ -15,7 +15,16 @@ describe DockingStation do
     #subject.dock_bike(bike)
     expect{ subject.release_bike }.to raise_error 'No bikes available'
   end
-
+  it 'only releases working bikes' do
+    docking_station = DockingStation.new
+    bike1 = Bike.new(false)
+    docking_station.dock_bike(bike1)
+    bike2 = Bike.new
+    docking_station.dock_bike(bike2)
+    bike3 = Bike.new(false)
+    docking_station.dock_bike(bike3)
+    expect(docking_station.release_bike).to eq bike2
+  end
  
   describe '#dock_bike' do
   it 'should respond to method dock_bike' do
@@ -25,7 +34,7 @@ describe DockingStation do
   it 'method dock_bike should store bike object' do
     bike = Bike.new
     array = []
-    expect(subject.dock_bike(bike)).to eq array.push(bike)
+    expect(subject.dock_bike(bike, false)).to eq array.push(bike)
   end
 end
   

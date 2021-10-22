@@ -1,4 +1,4 @@
-# require './lib/bike'
+require './lib/bike'
 
 class DockingStation
   def initialize(capacity = DEFAULT_CAPACITY)
@@ -11,11 +11,18 @@ class DockingStation
 
   def release_bike
     empty?
-    @bikes.pop
+    @bikes.each do
+      |bike|
+      if bike.working == true
+        @bikes.delete_at(@bikes.index(bike))
+        return bike
+      end
+    end
   end
 
-  def dock_bike(bike)
+  def dock_bike(bike, working=true)
   full?
+  bike.working = working
   @bikes.push(bike)
   end
 
