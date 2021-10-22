@@ -15,7 +15,7 @@ describe DockingStation do
     #subject.dock_bike(bike)
     expect{ subject.release_bike }.to raise_error 'No bikes available'
   end
-end
+
  
   describe '#dock_bike' do
   it 'should respond to method dock_bike' do
@@ -24,26 +24,28 @@ end
 
   it 'method dock_bike should store bike object' do
     bike = Bike.new
-    expect(subject.dock_bike(bike)).to eq bike
+    array = []
+    expect(subject.dock_bike(bike)).to eq array.push(bike)
   end
+end
   
-  it { is_expected.to respond_to (:bike) }
-
-  end
 
   it 'Should throw error if at max capacity' do
-  bike = Bike.new
-  subject.dock_bike(bike)
-  expect{subject.dock_bike(bike)}.to raise_error 'The docking station can only hold 1 bike'
+  20.times {
+  subject.dock_bike(Bike.new)
+  }
+  expect{subject.dock_bike(Bike.new)}.to raise_error 'The docking station can only hold 20 bikes'
   end
   
   
   it 'checks if bike is available' do
+    array = []
     bike = Bike.new
+    array.push(bike)
     subject.dock_bike(bike)
-    expect(subject.bike).to eq bike
+    expect(subject.release_bike).to eq array.pop
+  end
   end
 
 
 end
-
